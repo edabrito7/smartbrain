@@ -2,7 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+
 import * as serviceWorker from './serviceWorker';
+
+
+const param = {
+                    polygon: {
+                        enable: true,
+                        type: 'inside',
+                        move: {
+                            radius: 10
+                        },
+                        url: 'path/to/svg.svg'
+                    }
+                } 
 
 ReactDOM.render(
   <React.StrictMode>
