@@ -1,4 +1,4 @@
-p {
+.Navbar,  button {
 	display: flex;
 	justify-content: flex-end;
 	padding: 0em 2em;

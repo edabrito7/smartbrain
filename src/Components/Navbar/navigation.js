@@ -1,11 +1,12 @@
 import React from 'react';
 import './navbar.css';
+import Button from '@material-ui/core/Button';
 
 
 const Navigation = () => {
 	return (
 		<nav className="Navbar">
-			<p>Sign Out</p>
+			<Button color="black">Sign Out</Button>
 		</nav>
 		)
 }
