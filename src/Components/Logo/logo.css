@@ -7,3 +7,25 @@
 .Tilt-inner {
 	padding: 3em;
 }
+
+
+.Tilt {
+	width: 200px;
+	height: 200px;
+}
+
+
+@media only screen and (max-width: 600px) {
+	.Tilt {
+		width: 100px;
+		height: 100px;
+	}
+
+	.Tilt-inner {
+		padding: 2em;
+	}
+	img {
+		width: 40px;
+		height: auto;
+	}
+}

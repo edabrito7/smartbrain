@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      width: '50ch',
+      width: '25ch',
     },
   },
 }));
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 const Box = styled('div')(compose(spacing, palette))
 
 
-const ImageLinkForm = () => {
+const ImageLinkForm = ( { onInputChange, onSubmit } ) => {
 	const classes = useStyles();
 	return (
 		<div  className="container">
@@ -28,9 +28,11 @@ const ImageLinkForm = () => {
 				</div>
 				<div>
 					<form className={classes.root} noValidate autoComplete="off">
-	  					<TextField id="outlined-basic"  variant="outlined" label="Ingrese Link aqui"/>
+	  					<TextField id="outlined-basic"  variant="outlined" label="Ingrese Link aqui"
+	  					onChange={onInputChange}/>
 					</form>
-					<Button variant="contained" color="primary">
+					<Button variant="contained" color="primary"
+					onClick={ onSubmit }>
 	      				Try it!
 	    			</Button>
 				</div>
