@@ -37,10 +37,33 @@ class App extends Component{
       imageURL: '',
       box: {},
       route: 'signin',
-      SignedIn: false
+      SignedIn: false,
+      User: {
+      id: '',
+      name: '',
+      lastname: '',
+      email: '',
+      entries: 0,
+      joined: '', 
+    }
     }
   }
   
+
+loadUser = (data) => {
+  this.setState ({User: {
+      id: data.id,
+      name: data.name,
+      lastname: data.lastname,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined
+      }
+  })
+
+}
+
+
 
   calculateFaceLocation = (data) => {
     const ClarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -70,16 +93,31 @@ class App extends Component{
     this.setState({imageURL: this.state.input })
     app.models.predict("a403429f2ddf4b49b307e318f00e528b",  this.state.input )
     .then(response => {
+      if(response) {
+        fetch('http://localhost:3001/image',{
+        method: 'put',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          id: this.state.User.id
+          })
+      })
+        .then(response => response.json())
+        .then(count => {
+          this.setState(Object.assign(this.state.User, {entries:count}))
+        })
+
+
+
+      } /* Cierre del if */
     this.displayFaceBox(this.calculateFaceLocation(response));
     
-      /*console.log(response.outputs[0].data.regions[0].region_info.bounding_box);*/
+
     })
     .catch(error =>{
       console.log(error);
     }
   );
   }
-
 
   onRouteChange = (route) => {
     if (route === 'home') {
@@ -97,13 +135,16 @@ class App extends Component{
             <div className="App">
               <Navigation  isSignIn={ this.state.SignedIn }onRouteChange={ this.onRouteChange }  />
               { this.state.route === 'signin' 
-              ? <SignIn isSignIn={ this.state.isSignIn } onRouteChange={ this.onRouteChange }/>
+              ? <SignIn loadUser={ this.loadUser } isSignIn={ this.state.isSignIn } onRouteChange={ this.onRouteChange }/>
               : (this.state.route === 'register')
-              ? <Register onRouteChange={ this.onRouteChange }/>
+              ? <Register loadUser={ this.loadUser } onRouteChange={ this.onRouteChange }/>
               :
                <div>
                   <Logo />
-                  <UserInfo/>
+                  <UserInfo 
+                  name={ this.state.User.name}
+                  entries={ this.state.User.entries}
+                  />
                   <ImageLinkForm 
                   onInputChange={ this.onInputChange } 
                   onSubmit= { this.onSubmit }/>

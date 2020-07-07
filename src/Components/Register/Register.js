@@ -10,8 +10,8 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import '../SignIn/SignIn.css';
 
 function Copyright() {
   return (
@@ -26,43 +26,90 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+const checkCredentials = (email) => {
+    if (email.includes('@')) {
+      return true;
+    } else {
+      return false
+    }
+  }
+export default class Register extends React.Component  {
+  
+  constructor (props) {
+    super (props)
+      this.state = {
+        registerName: '',
+        registerLastName: '',
+        registerEmail:'',
+        registerPassword:'',
 
-export default function Register({ onRouteChange }) {
-  const classes = useStyles();
+      }
+  }
 
-  return (
+  onNameChange = (event) => {
+    this.setState({registerName: event.target.value})
+  }
+
+  onLastNameChange = (event) => {
+    this.setState({registerLastName: event.target.value})
+  }
+
+  onEmailChange = (event) => {
+    this.setState({registerEmail: event.target.value})
+  }
+
+  onPasswordChange = (event) => {
+    this.setState({registerPassword: event.target.value})
+  }
+
+
+  
+
+  onSubmitRegister = () => {
+    if (checkCredentials(this.state.registerEmail)) {
+        fetch('http://localhost:3001/register',{
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          name: this.state.registerName,
+          lastname: this.state.registerLastName,
+          email: this.state.registerEmail,
+          password: this.state.registerPassword,
+        })
+      })
+        .then(response => response.json())
+        .then(user => {
+          if (user) {
+            this.props.loadUser(user);
+            this.props.onRouteChange('home');
+            window.alert("SUCCESS");
+          } else {
+            window.alert("NO SUCCESS");
+          }
+        })
+    } else {
+      window.alert("INGRESE EMAIL CORRECTO");
+    }
+    
+  }
+
+  render () {
+    const { onRouteChange } = this.props;
+    return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+      <div className="paper">
+        <Avatar className="avatar">
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        <form className={classes.form} noValidate>
+        <div className="form">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                onChange={ this.onNameChange }
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
@@ -75,6 +122,7 @@ export default function Register({ onRouteChange }) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                onChange={ this.onLastNameChange }
                 variant="outlined"
                 required
                 fullWidth
@@ -86,6 +134,7 @@ export default function Register({ onRouteChange }) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                onChange={ this.onEmailChange }
                 variant="outlined"
                 required
                 fullWidth
@@ -97,6 +146,7 @@ export default function Register({ onRouteChange }) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                onChange={ this.onPasswordChange }
                 variant="outlined"
                 required
                 fullWidth
@@ -107,35 +157,37 @@ export default function Register({ onRouteChange }) {
                 autoComplete="current-password"
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
+            <Grid item xs={12} >
+              <FormControlLabel className="link2"
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
             </Grid>
           </Grid>
           <Button
-            onClick={() => onRouteChange('home')}
+            onClick={ this.onSubmitRegister }
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            className="submit"
           >
             Register
           </Button>
           <Grid container justify="flex-end">
-            <Grid item>
+            <Grid item className="link2">
               <Link href="#" variant="body2" onClick={() => onRouteChange('signin')}>
                 Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </div>
       </div>
       <Box mt={5}>
         <Copyright />
       </Box>
     </Container>
   );
+  }
+
 }

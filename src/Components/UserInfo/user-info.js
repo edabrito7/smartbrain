@@ -2,10 +2,11 @@ import React from 'react';
 
 
 
-const UserInfo = () => {
+const UserInfo = ( {name, entries} ) => {
 	return (
 		<div>
-			<h2>Eduardo is ok</h2>
+			<h3>{`${name} your current entries count is`}</h3>
+			<h2>{entries}</h2>
 		</div>
 		);
 }
