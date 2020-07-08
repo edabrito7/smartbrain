@@ -82,7 +82,6 @@ export default class Register extends React.Component  {
           if (user) {
             this.props.loadUser(user);
             this.props.onRouteChange('home');
-            window.alert("SUCCESS");
           } else {
             window.alert("NO SUCCESS");
           }
