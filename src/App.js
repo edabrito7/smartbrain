@@ -14,7 +14,7 @@ import './App.css';
 const parametros ={
   particles: {
     number: {
-      value: 80,
+      value: 85,
       density: {
         enable: true,
         value_area: 800,  
@@ -83,11 +83,18 @@ loadUser = (data) => {
 
   displayFaceBox = (box) => {
     this.setState( {box: box} );
-    console.log(this.state.box);
   }
   onInputChange = (event) => {
     this.setState({input: event.target.value});
   }
+
+
+  onErase = () => {
+    console.log(this.state.input);
+    this.setState({input: ''});
+    console.log(this.state.input);
+  }
+
 
   onSubmit = () => {
     this.setState({imageURL: this.state.input })
@@ -146,6 +153,8 @@ loadUser = (data) => {
                   entries={ this.state.User.entries}
                   />
                   <ImageLinkForm 
+                  inputdata= { this.state.input }
+                  onErase={ this.onErase }
                   onInputChange={ this.onInputChange } 
                   onSubmit= { this.onSubmit }/>
                   <FaceRecognition box={ this.state.box } imageURL={ this.state.imageURL }/ >

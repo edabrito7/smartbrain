@@ -114,20 +114,18 @@ export default class SignIn extends React.Component  {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+          <Grid className="submit2">
           <Button
             onClick={ this.onSubmitSignIn }
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            className="submit2"
+            
           >
             Sign In
           </Button>
+          </Grid>
           <Grid container>
             <Grid item className="link2">
               <Link   margin="normal" variant="body2" onClick={() => onRouteChange('register')}>
