@@ -70,7 +70,6 @@ loadUser = (data) => {
     const imagen = document.getElementById('inputImagen');
     const width = Number(imagen.width);
     const height = Number(imagen.height);
-    console.log(width, height);
     
     return {
       leftcol:ClarifaiFace.left_col * width,

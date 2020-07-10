@@ -26,7 +26,7 @@ const ImageLinkForm = ( { onInputChange, onSubmit, onErase, inputdata } ) => {
 		<div  className="container">
 			<Box className="box "color="black" bgcolor="None"  p={1}>
 				<div>
-					<p>{`Copy & Paste a picture's link to get a box around the face`}</p>
+					<p>{`Paste a picture's link to get a box around the face`}</p>
 				</div>
 				<div>
 					<form className={classes.root} noValidate autoComplete="off">
