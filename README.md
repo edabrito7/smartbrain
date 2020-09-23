@@ -21,7 +21,7 @@ You can read Netlify docs to know how to deploy this app or any app you'd like u
 
 ## Built With
 
-* [React](https://es.reactjs.org/) - The web framework used
+* [React](https://es.reactjs.org/) - The web library used
 * [Material UI](https://material-ui.com/) - UI framework used
 * [ParticlesJs](https://www.npmjs.com/package/react-particles-js) - Effects
 * [TiltJs](https://www.npmjs.com/package/react-tilt) - Effects
